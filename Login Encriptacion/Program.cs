@@ -1,9 +1,35 @@
+using Login_Encriptacion.Data;
+using Login_Encriptacion.Services;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddScoped<CryptoService>();
+builder.Services.AddDbContext<EncriptacionDbContext>(opc =>
+    opc.UseSqlite("Data Source=Seguridad.db"));
+
 var app = builder.Build();
+
+using(var scope = app.Services.CreateScope())
+{
+    var db= scope.ServiceProvider.GetRequiredService<EncriptacionDbContext>();
+    var cripto = scope.ServiceProvider.GetRequiredService<CryptoService>();
+
+    db.Database.Migrate();
+
+    if (!db.Usuarios.Any())
+    {
+        db.Usuarios.Add(new Login_Encriptacion.Models.Usuario
+        {
+            NombreUsuario = "admin",
+            PasswordHash = cripto.HashPassword("1234")
+        });
+        db.SaveChanges();
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

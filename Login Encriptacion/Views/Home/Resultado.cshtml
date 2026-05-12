@@ -1,0 +1,21 @@
+﻿@model Login_Encriptacion.Models.ViewModels.ViewModelResult
+@{
+    ViewData["Tittle"] = "Resultado del Cifrado";
+}
+
+<div class="container mt-4">
+    <h2>Analisis de Seguridad</h2>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card border-primary">
+                <div class="card-header bg-primary text-white">Encriptacion Simetrica (AES)</div>
+                <div class="card-body">
+                    <h6>Texto Cifrado:</h6>
+                    <p class="text-break bg-light p-2"> <code>@Model.SimetricoCifrado</code> </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
