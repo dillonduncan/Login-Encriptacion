@@ -1,15 +1,19 @@
 using Login_Encriptacion.Data;
 using Login_Encriptacion.Services;
 using Microsoft.EntityFrameworkCore;
+using SQLitePCL;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Batteries.Init();
+
+builder.Services.AddDbContext<EncriptacionDbContext>(opc =>
+    opc.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
 builder.Services.AddScoped<CryptoService>();
-builder.Services.AddDbContext<EncriptacionDbContext>(opc =>
-    opc.UseSqlite("Data Source=Seguridad.db"));
+
 
 var app = builder.Build();
 
