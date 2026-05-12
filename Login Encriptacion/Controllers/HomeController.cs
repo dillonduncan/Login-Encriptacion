@@ -26,8 +26,8 @@ namespace Login_Encriptacion.Controllers
         [HttpPost]
         public IActionResult Login(string user, string password)
         {
-            var u = _dbContext.Usuarios.FirstOrDefault(u => u.NombreUsuario == user);
-            if (u != null && u.PasswordHash == _cryptoS.HashPassword(password) { 
+            var u = _dbContext.Usuarios.FirstOrDefault(u => u.NombreUsuario == user);          
+            if (u != null && u.PasswordHash == _cryptoS.HashPassword(password)){
                 return RedirectToAction("Formulario");
             }
             ViewBag.Error = "Contraseña o Usuario incorrecto";
