@@ -27,7 +27,7 @@ namespace Login_Encriptacion.Services
         }
 
         //HASHIN PARA LA CONTRASEÑA
-        public static string HashPassword(string password)
+        public  string HashPassword(string password)
         {
             using var sha = SHA256.Create();
             var bytes = sha.ComputeHash(Encoding.UTF8.GetBytes(password));
